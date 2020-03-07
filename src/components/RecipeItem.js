@@ -3,16 +3,33 @@ import { connect } from "react-redux";
 import { favouriteRecipe } from "../actions";
 
 class RecipeItem extends Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            favorited: false
+        }
+    }
+
+    favorite(recipe) {
+        this.props.favouriteRecipe(recipe);
+        this.setState({
+            favorited: true
+        })
+    }
+
   render() {
     let { recipe } = this.props;
     return (
       <div className="recipe-item">
-        <div
+          {
+              this.state.favorited ? <div className="star">&#9733;</div>:   <div
           className="star"
-          onClick={() => this.props.favouriteRecipe(recipe)}
+          onClick={() => this.favorite(recipe) }
         >
           &#9734;
         </div>
+            }
         <div className="recipe-text">
           <a href={recipe.href}>
             <h4>{recipe.title}</h4>
